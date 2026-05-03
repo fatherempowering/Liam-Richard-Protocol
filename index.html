@@ -372,36 +372,68 @@ canvas{display:block;width:100%!important}
   <div class="spacer"></div>
 </div>
 
-<!-- ══ CHECK-IN ══ -->
-<div class="panel" id="panel-checkin">
-  <div class="checkin-form">
-    <div class="ci-row">
-      <div class="ci-top"><div><div class="ci-label">Poids corporel</div><div class="ci-sub">Mesure du matin · à jeun</div></div><input class="ci-input" id="ci-poids" type="number" step="0.1" placeholder="195.0"></div>
-    </div>
-    <div class="ci-row">
-      <div class="ci-top"><div><div class="ci-label">Énergie</div><div class="ci-sub">Comment tu te sens en entrant en gym</div></div><div class="ci-val" id="ci-energie-val">5</div></div>
-      <input class="ci-slider" id="ci-energie" type="range" min="1" max="10" value="5">
-    </div>
-    <div class="ci-row">
-      <div class="ci-top"><div><div class="ci-label">Sommeil</div><div class="ci-sub">Qualité moyenne des 7 dernières nuits</div></div><div class="ci-val" id="ci-sommeil-val">5</div></div>
-      <input class="ci-slider" id="ci-sommeil" type="range" min="1" max="10" value="5">
-    </div>
-    <div class="ci-row">
-      <div class="ci-top"><div><div class="ci-label">Stress</div><div class="ci-sub">Travail · famille · fatigue accumulée</div></div><div class="ci-val" id="ci-stress-val">5</div></div>
-      <input class="ci-slider" id="ci-stress" type="range" min="1" max="10" value="5">
-    </div>
-    <div class="ci-row">
-      <div class="ci-top"><div><div class="ci-label">Genou gauche</div><div class="ci-sub">Douleur ou inconfort · 1 = aucun · 10 = intense</div></div><div class="ci-val" id="ci-genou-val">1</div></div>
-      <input class="ci-slider" id="ci-genou" type="range" min="1" max="10" value="1">
-    </div>
-    <div class="ci-row">
-      <div class="ci-label" style="margin-bottom:8px">Note de la semaine</div>
-      <textarea class="notes-area" id="ci-note" placeholder="Sensations, genou, douleurs, victoires..."></textarea>
-    </div>
-  </div>
-  <button class="save-btn" onclick="saveCheckin()"><div class="save-btn-label">SAUVEGARDER CHECK-IN</div></button>
-  <div class="spacer"></div>
-</div>
+<form
+  action="https://docs.google.com/forms/d/e/1FAIpQLSdzG5UbUN2ilcMcGHyFlYoeKFfhm7uhEb5-DtYrrkZDizdapA/formResponse"
+  method="POST"
+  target="hidden_iframe"
+  id="checkinForm"
+>
+
+  <!-- CLIENT -->
+
+  <input type="hidden" name="entry.1924816685" value="Maxime Gaudet">
+
+  <!-- WEEK -->
+
+  <input type="hidden" name="entry.102654243" id="weekField">
+
+  <!-- WEIGHT -->
+
+<label>Weight</label> <input name="entry.691840474" type="number" step="0.1" placeholder="180">
+
+  <!-- ENERGY -->
+
+<label>Energy</label> <input type="range" min="1" max="10" value="5" name="entry.635105675">
+
+  <!-- SLEEP -->
+
+<label>Sleep</label> <input type="range" min="1" max="10" value="5" name="entry.916487567">
+
+  <!-- STRESS -->
+
+<label>Stress</label> <input type="range" min="1" max="10" value="5" name="entry.1661477903">
+
+  <!-- COMPLIANCE -->
+
+<label>Compliance</label> <select name="entry.2036586371"> <option value="">Select</option> <option>Yes</option> <option>Partial</option> <option>No</option> </select>
+
+  <!-- NOTES -->
+
+<label>Notes</label>
+
+  <textarea name="entry.1804707052"></textarea>
+
+<button type="submit">Send Check-in</button>
+
+</form>
+
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
+<script>
+document.getElementById("weekField").value =
+  typeof getCurrentUnlockedWeek === "function"
+  ? getCurrentUnlockedWeek()
+  : "1";
+
+document.getElementById("checkinForm")
+.addEventListener("submit", function(){
+  setTimeout(()=>{
+    alert("Check-in envoyé ✔");
+    this.reset();
+  },500);
+});
+</script>
+
 
 <!-- ══ HISTORIQUE ══ -->
 <div class="panel" id="panel-historique">
